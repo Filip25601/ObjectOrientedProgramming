@@ -1,12 +1,28 @@
 #include "Owner.h"
-#include <algorithm>
 #include <iostream>
 
-Owner::Owner(std::string name) : name(name){}
+Owner::Owner(std::string name,Food& hrana) : name(name), hrana(hrana) {}
 
 
 void Owner::Add(VirtualPet pet){
     pets.push_back(pet);
+}
+
+void Owner::setName(std::string name)
+{
+    this->name = name;
+}
+std::string Owner::getName()const {
+    return this->name;
+}
+
+void Owner::setPets(std::vector<VirtualPet> pets)
+{
+    this->pets = pets;
+}
+std::vector<VirtualPet> Owner::getPets()const
+{
+    return this->pets;
 }
 
 void Owner::Action(){
@@ -23,23 +39,20 @@ void Owner::Action(){
     }
 }
 
+
 void Owner::copyOwner(Owner& other){
-    name= other.name;
-    pets = other.pets;
+    setName(other.getName());
+    setPets((other.getPets()));
 }
 
 void Owner::transferOwnership(Owner&& other) {
-    name = std::move(other.name);
-    pets = std::move(other.pets);
-}
-
-std::string Owner::getName()  {
-    return name;
+    setName(std::move(other.getName()));
+    setPets(std::move(other.getPets()));
 }
 
 VirtualPet Owner::getHappiest()  {
     auto happiestPet = std::max_element(pets.begin(), pets.end(),
-        []( VirtualPet pet1,  VirtualPet pet2) {
+        [](const VirtualPet& pet1, const VirtualPet& pet2) {
             return pet1.getSreca() < pet2.getSreca();
         });
 
@@ -47,8 +60,3 @@ VirtualPet Owner::getHappiest()  {
 }
 
 
-void Owner::feedPets(Food& food) {
-    for (auto& pet : pets) {
-        pet.feed(food); 
-    }
-}

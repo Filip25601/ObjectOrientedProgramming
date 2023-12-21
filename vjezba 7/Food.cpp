@@ -1,17 +1,23 @@
 #include"Food.h"
 #include<iostream>
+#include <algorithm>
 
-int Food::counter = 0;
+int Food::counter = 20;
 
-void Food::Increase() {
-	counter++;
+Food::Food() { 
+	++counter;
 }
 
-void Food::Decrease() {
-	counter--;
+Food::~Food() {
+	--counter; 
 }
 
-void Food::Print() {
+void Food::changeCounter(int value) {
+	counter += value;
+	counter = std::max(0, counter);
+}
+
+void Food::printCounter() {
 	std::cout << "Broj raspolozivih porcija je: " << counter << std::endl;
 }
 
@@ -21,4 +27,10 @@ int Food::getCounter() {
 
 int get_counter() {
 	return Food::getCounter();
+}
+
+void Food::consumeFood() {
+	if (counter > 0) {
+		counter--;
+	}
 }

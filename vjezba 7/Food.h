@@ -1,9 +1,13 @@
 #pragma once
 class Food {
+private:
 	static int counter;
+
 public:
-	void Increase();
-	void Decrease();
-	void Print();
+	Food();
+	~Food();
+	static void changeCounter(int value);
+	static void printCounter();
 	static int getCounter();
+	void consumeFood();
 };
