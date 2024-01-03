@@ -1,0 +1,8 @@
+target
+hello
+substring
+target
+world
+target
+example
+test
